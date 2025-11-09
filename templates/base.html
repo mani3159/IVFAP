@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}IVF Dashboard{% endblock %}</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <style>
+    /* Global Reset / Box Sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0; 
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background: #fffadf;
+      color: #3f2f06;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #fbb216;
+      display: flex;
+      align-items: center;
+      padding: 10px 24px;
+      box-shadow: 0 0 15px rgba(251, 178, 22, 0.6);
+    }
+
+    header img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      margin-right: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    header div h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #3f2f06;
+    }
+
+    header div h2 {
+      margin: -5px 0 0 0;
+      font-family: "Noto Sans Telugu", serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #3f2f06;
+    }
+    
+    nav {
+      background-color: #fbb216;
+      padding: 12px 0;
+      text-align: center;
+      margin-bottom: 0;
+      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      color: #040000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0 16px;
+      text-decoration: none;
+      transition: text-decoration 0.3s ease;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 940px;
+      background: #fff9df;
+      box-shadow: 0 0 15px #ddd49f;
+      margin: 20px auto 40px auto;
+      border-radius: 15px;
+      padding: 20px 28px;
+      min-height: 60vh;
+    }
+
+    footer {
+      background-color: #f0eaa6;
+      text-align: center;
+      padding: 15px 10px;
+      color: #62703d;
+      font-style: italic;
+      font-size: 0.87rem;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      header img {
+        margin: 0 0 12px 0;
+      }
+      nav a {
+        margin: 0 10px;
+        font-size: 1rem;
+      }
+      main {
+        padding: 20px 15px;
+        margin: 15px;
+      }
+    }
+    
+    /* Utility Classes */
+    .form-submit-btn {
+      background:#fbb216; 
+      color:#431c08; 
+      font-weight:700; 
+      border:none; 
+      border-radius:6px; 
+      padding:10px 40px; 
+      font-size:1.1rem; 
+      box-shadow:0 3px 7px #f0eaa6;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    .form-submit-btn:hover {
+      background:#e3a317;
+    }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<header>
+  
+  <div>
+    <h1>INTERNATIONAL VAISH FEDERATION</h1>
+    <h2>ఇంటర్నేషనల్ వైశ్య ఫెడరేషన్</h2>
+  </div>
+  
+  <div style="position:absolute; top:15px; right:20px; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+    {% if user.is_authenticated %}
+      Welcome, {{ user.username }}  |
+      <a href="{% url 'logout' %}" style="color:#431c08; text-decoration:none; font-weight:bold;">
+        Logout
+      </a>
+    {% else %}
+      <a href="{% url 'login' %}" style="color:#431c08; text-decoration:none; font-weight:bold;">
+        Login
+      </a>
+    {% endif %}
+  </div>
+</header>
+
+<nav>
+  <a href="{% url 'create_presentation' %}">Create Entry</a>
+  <a href="{% url 'track_history' %}">Track History</a>
+</nav>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  &copy; 2025 International Vaish Federation - Andhra Pradesh State Unit
+</footer>
+
+</body>
+</html>

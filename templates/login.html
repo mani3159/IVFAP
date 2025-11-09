@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div style="
+  max-width: 380px;
+  margin: 80px auto 0 auto;
+  padding: 24px 30px;
+  background-color: #fff9df;
+  box-shadow: 0 0 18px #d7ca84;
+  border-radius: 14px;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+">
+  <h2 style="color: #8e2916; font-weight: 900; margin-bottom: 10px;">
+    Login - International Vaish Federation
+  </h2>
+  {% if form.errors %}
+    <p style="color: #c82333; font-weight:600; margin-bottom:15px;">
+      Username or password is incorrect.
+    </p>
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div style="margin-bottom: 15px; text-align:left;">
+      <label for="id_username" style="font-weight: 600; color: #6c4d12;">Username</label>
+      {{ form.username }}
+    </div>
+    <div style="margin-bottom: 20px; text-align:left;">
+      <label for="id_password" style="font-weight: 600; color: #6c4d12;">Password</label>
+      {{ form.password }}
+    </div>
+    <button type="submit" style="
+      width: 100%;
+      background: #fbb216;
+      border: none;
+      color: #431c08;
+      font-weight: 700;
+      padding: 10px 0;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 3px 7px #f0eaa6;
+      transition: background 0.25s ease;
+    ">
+      Log In
+    </button>
+  </form>
+</div>
+{% endblock %}

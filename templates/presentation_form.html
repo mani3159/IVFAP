@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Create Entry{% endblock %}
+
+{% block content %}
+
+    <h2 style="text-align:center; color:#8e2916; font-weight:800; letter-spacing:1px; font-size:1.55rem; margin-bottom:16px;">
+        International Vaish Federation Andhra Pradesh Unit
+    </h2>
+    <h3 style="text-align:center; color:#d37933; font-family:'Noto Sans Telugu', serif; margin-top:-10px; font-size:1rem;">
+        ఇంటర్నేషనల్ వైశ్య ఫెడరేషన్
+    </h3>
+
+    <form id="presentationForm" method="POST" style="margin-top:28px;" onsubmit="return validateForm()">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"
+                style="background:#fbb216; color:#431c08; font-weight:700; border:none; border-radius:6px; padding:9px 38px; font-size:1rem; box-shadow:0 2px 5px #f0eaa6; cursor:pointer; margin-top:16px;">
+            Submit
+        </button>
+    </form>
+</div>
+
+<script>
+function validateForm() {
+    const form = document.getElementById("presentationForm");
+    const date = form.elements["date"].value.trim();
+    const toname = form.elements["toname"].value.trim();
+    const phno = form.elements["phno"].value.trim();
+    const aadharno = form.elements["aadharno"].value.trim();
+    const ap = form.elements["ap"].value.trim();
+    const aptdas = form.elements["aptdas"].value.trim();
+
+    if (!date || !toname || !phno || !aadharno || !ap || !aptdas) {
+        alert("All fields are required.");
+        return false;
+    }
+
+    const phnoPattern = /^\d{10}$/;
+    if (!phnoPattern.test(phno)) {
+        alert("Phone number must be exactly 10 digits.");
+        return false;
+    }
+
+    const aadharPattern = /^\d{12}$/;
+    if (!aadharPattern.test(aadharno)) {
+        alert("Aadhar number must be exactly 12 digits.");
+        return false;
+    }
+
+    return true;
+}
+</script>
+{% endblock %}
