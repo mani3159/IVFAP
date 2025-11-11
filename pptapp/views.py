@@ -27,8 +27,13 @@ from pptx import Presentation
 
 from django.contrib.auth.decorators import user_passes_test
 
+from django.contrib.auth.decorators import user_passes_test
+
 def superuser_required(view_func):
-    return user_passes_test(lambda u: u.is_active and u.is_superuser)(view_func)
+    def check_user(u):
+        return u.is_active and (u.is_superuser or u.is_authenticated)
+    return user_passes_test(check_user)(view_func)
+
 
 
 from django.contrib.auth import logout
