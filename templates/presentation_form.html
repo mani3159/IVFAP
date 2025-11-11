@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block title %}Create Entry{% endblock %}
 
 {% block content %}
-<!-- Four Photos Row (Larger Circles) -->
-
-
 <h2 style="text-align:center; color:#8e2916; font-weight:800; letter-spacing:1px; font-size:1.55rem; margin-bottom:16px;">
     International Vaish Federation Andhra Pradesh Unit
 </h2>
@@ -15,21 +11,27 @@
 
 <form id="presentationForm" method="POST" style="margin-top:28px; max-width: 500px;">
     {% csrf_token %}
+    
     <div style="margin-bottom: 15px;">
         <label>Date: <input type="date" name="date" required value="{{ today }}"></label><br>
+
     </div>
+
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Name:</label>
         <input type="text" name="toname" required style="width: 100%; padding: 8px; box-sizing: border-box;">
     </div>
+
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Phno:</label>
         <input type="text" name="phno" maxlength="10" required style="width: 100%; padding: 8px; box-sizing: border-box;">
     </div>
+
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Aadharno:</label>
         <input type="text" name="aadharno" maxlength="12" required style="width: 100%; padding: 8px; box-sizing: border-box;">
     </div>
+
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Appointment:</label>
         <select name="ap" required style="width: 100%; padding: 8px; box-sizing: border-box;">
@@ -37,40 +39,72 @@
             <option value="YUVAJANA VIBHAG STATE MEMBER">YUVAJANAVIBHAG STATE MEMBER</option>
         </select>
     </div>
+
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Designation:</label>
         <input type="text" name="aptdas" maxlength="200" required style="width: 100%; padding: 8px; box-sizing: border-box;">
     </div>
+    
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">AP District:</label>
         <select name="ap_district" id="ap_district" required style="width: 100%; padding: 8px; box-sizing: border-box;">
             <option value="">Select District</option>
         </select>
     </div>
+
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">AP Constitution:</label>
         <select name="ap_constitution" id="ap_constitution" required style="width: 100%; padding: 8px; box-sizing: border-box;">
             <option value="">Select Constitution</option>
         </select>
     </div>
+
     <div style="margin-bottom: 20px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Address:</label>
         <textarea name="address" rows="4" cols="40" placeholder="Enter address here" required style="width: 100%; padding: 8px; box-sizing: border-box;"></textarea>
     </div>
     <div style="margin-bottom: 15px;">
-        <label style="display:block; font-weight:600; margin-bottom: 5px;">Pincode:</label>
-        <input type="text" name="pincode" maxlength="10" required style="width: 100%; padding: 8px; box-sizing: border-box;">
-    </div>
+    <label style="display:block; font-weight:600; margin-bottom: 5px;">Pincode:</label>
+    <input type="text" name="pincode" maxlength="10" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+</div>
+
+    
     <button type="submit"
             style="background:#fbb216; color:#431c08; font-weight:700; border:none; border-radius:6px; padding:9px 38px; font-size:1rem; box-shadow:0 2px 5px #f0eaa6; cursor:pointer;">
         Submit
     </button>
 </form>
 
+
 <script>
 // Dictionary of districts and their constituencies
 const CONSTITUENCIES_BY_DISTRICT = {
-    // ... districts as provided earlier ...
+    "Srikakulam": ["Ichchapuram", "Palasa", "Tekkali", "Pathapatnam", "Srikakulam", "Amadalavalasa", "Etcherla", "Narasannapeta"],
+    "Vizianagaram": ["Rajam", "Palakonda", "Kurupam", "Parvathipuram", "Salur", "Bobbili", "Cheepurupalli", "Gajapathinagaram", "Nellimarla", "Vizianagaram"],
+    "Parvathipuram Manyam": ["Kurupam", "Parvathipuram", "Salur", "Araku Valley"],
+    "Visakhapatnam": ["Srungavarapukota", "Bhimili", "Visakhapatnam East", "Visakhapatnam South", "Visakhapatnam North", "Visakhapatnam West", "Gajuwaka", "Chodavaram", "Elamanchili", "Pendurthi"],
+    "Anakapalli": ["Madugula", "Anakapalle", "Pendurthi", "Payakaraopet", "Tuni", "Narsipatnam", "Chodavaram", "Pendurthi"],
+    "Alluri Sitharama Raju": ["Araku Valley", "Paderu", "Rampachodravaram"],
+    "Kakinada": ["Tuni", "Prathipadu", "Pithapuram", "Kakinada Rural", "Kakinada City", "Ramachandrapuram", "Mummidivaram"],
+    "East Godavari": ["Anaparthy", "Kakinada City", "Ramachandrapuram", "Mummidivaram", "Razole", "Kothapeta", "Mandapeta"],
+    "Konaseema": ["Amalapuram", "Razole", "Mummidivaram", "Kothapeta", "Ramachandrapuram", "Mummidivaram", "Kothapeta"],
+    "West Godavari": ["Achanta", "Palakollu", "Bhimavaram", "Undi", "Tanuku", "Tadepalligudem", "Unguturu"],
+    "Eluru": ["Unguturu", "Denduluru", "Polavaram", "Chintalapudi", "Tiruvuru", "Nuzvid", "Kaikalur"],
+    "NTR": ["Nuzvid", "Gannavaram", "Kaikalur", "Pedana", "Machilipatnam", "Avanigadda", "Pamarru"],
+    "Krishna": ["Gannavaram", "Gudivada", "Kaikalur", "Pedana", "Machilipatnam", "Avanigadda", "Pamarru"],
+    "Guntur": ["Pedakurapadu", "Tadikonda", "Mangalagiri", "Ponnuru", "Vemuru", "Repalle", "Tenali"],
+    "Palnadu": ["Chilakaluripet", "Narasaraopet", "Sattenapalle", "Vinukonda", "Gurazala", "Macherla", "Yerragondapalem"],
+    "Bapatla": ["Darsi", "Parchur", "Addanki", "Chirala", "Santhanuthalapadu", "Ongole", "Markapuram"],
+    "Prakasam": ["Yerragondapalem", "Darsi", "Parchur", "Addanki", "Chirala", "Santhanuthalapadu", "Ongole", "Kandukur", "Markapuram"],
+    "Nellore": ["Kondapi", "Kavali", "Atmakur", "Nellore City", "Nellore Rural", "Udayagiri"],
+    "Tirupati": ["Kavali", "Gudur", "Sullurpeta", "Nagari", "Tirupati", "Srikalahasti"],
+    "Chittoor": ["Punganur", "Chandragiri", "Tirupati", "Satyavedu", "Nagari", "Chittoor", "Puthalapattu", "Palamaner", "Kuppam"],
+    "Annamayya": ["Rajampet", "Kodur", "Rayachoti", "Thamballapalle", "Pileru", "Madanapalle"],
+    "YSR Kadapa": ["Badvel", "Kadapa", "Rayachoti", "Pulivendla", "Kamalapuram", "Jammalamadugu", "Proddatur", "Mydukur"],
+    "Nandyal": ["Allagadda", "Nandyal", "Nandikotkur", "Banaganapalle", "Dhone", "Pattikonda"],
+    "Kurnool": ["Kurnool", "Pattikonda", "Adoni", "Alur", "Kodumur", "Yemmiganur", "Mantralayam"],
+    "Ananthapuramu": ["Rayadurg", "Uravakonda", "Guntakal", "Tadipatri", "Singanamala", "Anantapur Urban", "Kalyandurg", "Hindupur"],
+    "Sri Sathya Sai": ["Madakasira", "Hindupur", "Penukonda", "Puttaparthi", "Dharmavaram", "Kadiri"]
 };
 
 // Populate district dropdown
