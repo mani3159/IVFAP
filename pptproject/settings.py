@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-gd&wpkb_@_q+xr5#m@%f1@rnlkq^f6vc=3c)8icgg^3ee3h#4(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.6','*',]
-
+ALLOWED_HOSTS = ['192.168.1.6','ivfap-1.onrender.com','*',]
+CSRF_TRUSTED_ORIGINS = ['https://ivfap-1.onrender.com']
 
 # Application definition
 
