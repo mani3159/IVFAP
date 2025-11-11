@@ -8,7 +8,7 @@ from pptx import Presentation
 from django.http import HttpResponse, FileResponse
 import pandas as pd
 import io
-import tempfile
+
 
 from django.http import FileResponse
 from django.shortcuts import render
@@ -23,7 +23,7 @@ from datetime import date
 import os
 from pptx import Presentation
 
-import pythoncom
+
 
 from django.contrib.auth.decorators import user_passes_test
 
@@ -169,7 +169,7 @@ def create_presentation(request):
 
 from django.shortcuts import render
 from .models import PresentationData
-@superuser_required
+
 @superuser_required
 def track_history(request):
     entries = PresentationData.objects.all().order_by('-created_at')
@@ -219,7 +219,7 @@ from .models import PresentationData
 import os
 from pptx import Presentation
 
-import pythoncom
+
 
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
@@ -227,7 +227,7 @@ from .models import PresentationData
 import os
 from pptx import Presentation
 
-import pythoncom
+
 @superuser_required
 def history_download_ppt(request, pk):
     pk = str(pk).upper()
