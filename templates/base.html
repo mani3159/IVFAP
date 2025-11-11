@@ -1,11 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>{% block title %}IVF Dashboard{% endblock %}</title>
-  
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
+
   <style>
     /* Global Reset / Box Sizing */
     *, *::before, *::after {
@@ -26,56 +26,80 @@
     header {
       background-color: #fbb216;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      padding: 10px 24px;
+      padding: 20px 40px;
       box-shadow: 0 0 15px rgba(251, 178, 22, 0.6);
+      position: relative;
+      border-radius: 0 0 20px 20px;
     }
 
-    header img {
-      height: 60px;
-      width: 60px;
-      border-radius: 50%;
-      margin-right: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    header div {
+      text-align: center;
     }
 
-    header div h1 {
-      margin: 0;
-      font-size: 2rem;
+    header h1 {
+      font-size: 2.5rem;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
+      margin: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: #3f2f06;
     }
 
-    header div h2 {
-      margin: -5px 0 0 0;
+    header h2 {
+      margin: -5px 0 20px 0;
       font-family: "Noto Sans Telugu", serif;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #3f2f06;
     }
-    
-    nav {
-      background-color: #fbb216;
-      padding: 12px 0;
+
+    /* Centered Photos Row */
+    .photo-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 40px;
+      margin-top: 20px;
+      flex-wrap: wrap; /* Ensure responsiveness on smaller screens */
+    }
+
+    .photo-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .photo-column img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .photo-column img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(251, 178, 22, 0.5);
+      cursor: pointer;
+    }
+
+    .caption {
+      font-family: "Noto Sans Telugu", serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3f2f06;
       text-align: center;
-      margin-bottom: 0;
-      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+      max-width: 200px;
+      line-height: 1.3;
     }
 
-    nav a {
-      color: #040000;
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin: 0 16px;
-      text-decoration: none;
-      transition: text-decoration 0.3s ease;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-
+    /* Main Content Styles */
     main {
       flex-grow: 1;
       max-width: 940px;
@@ -87,6 +111,28 @@
       min-height: 60vh;
     }
 
+    /* Navigation Bar Styles */
+    nav {
+      background-color: #fbb216;
+      padding: 12px 0;
+      text-align: center;
+      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      color: #040000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0 16px;
+      text-decoration: none;
+      transition: text-decoration 0.3s;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer Styles */
     footer {
       background-color: #f0eaa6;
       text-align: center;
@@ -97,47 +143,28 @@
       box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    button, input, select, textarea {
-      font-family: inherit;
-      font-size: inherit;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
+    /* Responsive styles */
+    @media(max-width: 768px) {
       header {
-        flex-direction: column;
-        align-items: center;
         padding: 20px;
       }
-      header img {
-        margin: 0 0 12px 0;
+      .photo-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
       }
-      nav a {
-        margin: 0 10px;
-        font-size: 1rem;
+      .photo-column {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
       }
-      main {
-        padding: 20px 15px;
-        margin: 15px;
+      .photo-column img {
+        width: 120px;
+        height: 120px;
       }
     }
-    
-    /* Utility Classes */
-    .form-submit-btn {
-      background:#fbb216; 
-      color:#431c08; 
-      font-weight:700; 
-      border:none; 
-      border-radius:6px; 
-      padding:10px 40px; 
-      font-size:1.1rem; 
-      box-shadow:0 3px 7px #f0eaa6;
-      cursor: pointer;
-      transition: background 0.25s ease;
-    }
-    .form-submit-btn:hover {
-      background:#e3a317;
-    }
+
   </style>
 
   {% block extra_head %}{% endblock %}
@@ -145,25 +172,44 @@
 <body>
 
 <header>
-  
   <div>
     <h1>INTERNATIONAL VAISH FEDERATION</h1>
     <h2>ఇంటర్నేషనల్ వైశ్య ఫెడరేషన్</h2>
   </div>
-  
-  <div style="position:absolute; top:15px; right:20px; font-family: Verdana, Geneva, Tahoma, sans-serif;">
-    {% if user.is_authenticated %}
-      Welcome, {{ user.username }}  |
-      <a href="{% url 'logout' %}" style="color:#431c08; text-decoration:none; font-weight:bold;">
-        Logout
-      </a>
-    {% else %}
-      <a href="{% url 'login' %}" style="color:#431c08; text-decoration:none; font-weight:bold;">
-        Login
-      </a>
-    {% endif %}
+
+  <!-- Photos below titles, centered -->
+  <div class="photo-row">
+    <div class="photo-column">
+      <img src="{% static 'image1.jpg' %}" alt="Photo 1" />
+      <div class="caption">శ్రీ గాజులపల్లి అభినయ్ గారు <br>అధ్యక్షులు</div>
+    </div>
+    <div class="photo-column">
+      <img src="{% static 'image2.jpg' %}" alt="Photo 2" />
+      <div class="caption">శ్రీ పెడబల్లె వికాస్ గారు <br>ప్రధాన కార్యదర్శి</div>
+    </div>
+    <div class="photo-column">
+      <img src="{% static 'image3.jpg' %}" alt="Photo 3" />
+      <div class="caption">శ్రీ అశోక్ అగర్వాల్ గారు</div>
+    </div>
+    <div class="photo-column">
+      <img src="{% static 'image4.jpg' %}" alt="Photo 4" />
+      <div class="caption">శ్రీ గొంట్లా రామ మోహన రావు గారు <br> IVF - ఆం.ప్ర. రాష్ట్ర ప్రధాన కార్యదర్శి</div>
+    </div>
+    <div class="photo-column">
+      <img src="{% static 'image5.jpg' %}" alt="Photo 5" />
+      <div class="caption">శ్రీ డా. కోన శ్రీనివాస రావు గారు<br>IVF - ఆం.ప్ర. రాష్ట్ర అధ్యక్షులు</div>
+    </div>
   </div>
 </header>
+
+<div style="position:absolute; top:15px; right:20px; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+  {% if user.is_authenticated %}
+    Welcome, {{ user.username }}  |
+    <a href="{% url 'logout' %}" style="color:#431c08; text-decoration:none; font-weight:bold;">Logout</a>
+  {% else %}
+    <a href="{% url 'login' %}" style="color:#431c08; text-decoration:none; font-weight:bold;">Login</a>
+  {% endif %}
+</div>
 
 <nav>
   <a href="{% url 'create_presentation' %}">Create Entry</a>

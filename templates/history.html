@@ -4,12 +4,7 @@
 {% block content %}
 <h2 style="text-align:center; color:#8e2916; margin-bottom:15px; font-size:1.7rem; letter-spacing:1.2px;">Track History</h2>
 
-<form method="get" style="margin-bottom: 1.5em; text-align:center;">
-    <input type="text" name="search_id" style="font-size:1rem; padding:8px 15px; border-radius:8px; border:2px solid #fbb216; width:220px;" placeholder="Search by Entry ID (e.g., IVF1)" value="{{ search_term }}" />
-    <button type="submit" style="background:#fbb216; color:#431c08; font-weight:600; border:none; border-radius:6px; padding:8px 20px;">
-        Search
-    </button>
-</form>
+
 {% if not_found %}
     <p style="color: #d22828; font-weight:600; text-align:center;">No results found.</p>
 {% endif %}
@@ -30,22 +25,26 @@
     font-size:0.98rem;">
     <thead>
         <tr style="background:#fbb216; color:#3f2913;">
-            <th style="padding:12px 13px;">Entry&nbsp;ID</th>
+            
             <th style="padding:12px 13px;">Date</th>
             <th style="padding:12px 13px;">To Name</th>
             <th style="padding:12px 13px;">Phone No</th>
             <th style="padding:12px 13px;">Aadhar No</th>
             <th style="padding:12px 13px;">AP1</th>
             <th style="padding:12px 13px;">AP2</th>
-            <th style="padding:12px 13px;">Appointment Designation</th>
+            <th style="padding:12px 13px;">Designation</th>
+            <th style="padding:12px 13px;">District</th>
+            <th style="padding:12px 13px;">Constitution</th>
+            <th style="padding:12px 13px;">Pin Code</th>
             <th style="padding:12px 13px;">Created At</th>
             <th style="padding:12px 13px;">Download</th>
+            
         </tr>
     </thead>
     <tbody>
         {% for entry in entries %}
         <tr style="border-bottom:1.5px solid #faf0c6; text-align:center; height:39px;">
-            <td style="padding:9px 8px; font-weight:700; background:#fff7d3;">{{ entry.entry_id }}</td>
+            
             <td style="padding:9px 8px;">{{ entry.date }}</td>
             <td style="padding:9px 8px;">{{ entry.toname }}</td>
             <td style="padding:9px 8px; font-family:'Segoe UI',sans-serif;">{{ entry.phno }}</td>
@@ -53,11 +52,14 @@
             <td style="padding:9px 8px;">{{ entry.ap1 }}</td>
             <td style="padding:9px 8px;">{{ entry.ap2 }}</td>
             <td style="padding:9px 8px;">{{ entry.aptdas }}</td>
+            <td style="padding:9px 8px;">{{ entry.ap_district }}</td>
+            <td style="padding:9px 8px;">{{ entry.ap_constitution }}</td>
+            <td style="padding:9px 8px;">{{ entry.pincode }}</td>
             <td style="padding:9px 8px; font-size:0.96em;">{{ entry.created_at }}</td>
             <td style="padding:9px 8px;">
-                <a href="{% url 'history_download_png' entry.pk %}">
+                <a href="{% url 'history_download_ppt' pk=entry.pk %}">
                     <button style="background:#fb9e16; color:#4c2009; font-weight:600; border:none; border-radius:5px; padding:8px 16px;">
-                        Download&nbsp;PNG
+                        Download&nbsp;PPT
                     </button>
                 </a>
             </td>

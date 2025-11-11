@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gd&wpkb_@_q+xr5#m@%f1@rnlkq^f6vc=3c)8icgg^3ee3h#4(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['192.168.1.6','*',]
 
 
 # Application definition
@@ -122,3 +122,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/history/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # if you have a static folder at project root
+]
+
+# Folder where collectstatic will collect static files (for production)
+STATIC_ROOT = BASE_DIR / "staticfiles"
