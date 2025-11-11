@@ -22,7 +22,7 @@ from .models import PresentationData
 from datetime import date
 import os
 from pptx import Presentation
-import win32com.client
+
 import pythoncom
 
 from django.contrib.auth.decorators import user_passes_test
@@ -218,7 +218,7 @@ from django.shortcuts import get_object_or_404
 from .models import PresentationData
 import os
 from pptx import Presentation
-import win32com.client
+
 import pythoncom
 
 from django.http import FileResponse
@@ -226,7 +226,7 @@ from django.shortcuts import get_object_or_404
 from .models import PresentationData
 import os
 from pptx import Presentation
-import win32com.client
+
 import pythoncom
 @superuser_required
 def history_download_ppt(request, pk):
