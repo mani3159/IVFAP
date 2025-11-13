@@ -164,7 +164,7 @@ def create_presentation(request):
             content_type='application/vnd.openxmlformats-officedocument.presentationml.presentation',
         )
         # Suggested filename; adjust as needed
-        filename = f"{data.toname}_presentation.pptx"
+        filename = f"{data.toname}_Appointment_Letter.pptx"
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
 
@@ -218,7 +218,7 @@ def export_excel(request):
     buffer.seek(0)
 
     response = HttpResponse(buffer, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename="presentation_history.xlsx"'
+    response['Content-Disposition'] = 'attachment; filename="Members_Data.xlsx"'
     return response
 
 
