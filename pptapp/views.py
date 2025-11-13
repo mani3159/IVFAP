@@ -103,9 +103,13 @@ def create_presentation(request):
         except ValueError:
             return HttpResponseBadRequest("Invalid date format.")
 
-        ap_parts = ap.split(' ', 1)
-        ap1 = ap_parts[0]
-        ap2 = ap_parts[1] if len(ap_parts) > 1 else ''
+        ap_parts = ap.split(' ', 2)
+        ap1 = ap_parts[0]+" "+ap_parts[1]
+        ap2 = ap_parts[2] if len(ap_parts) > 2 else ''
+        if ap2=='STATE MEMBER':
+            aptdas=aptdas+" "+"-"+' '+"YUVAJANA VIBHAG AP STATE UNIT"
+        else:
+            aptdas=aptdas+" "+"-"+' '+"YUVAJANA VIBHAG AP DISTRICT UNIT"
 
         data = PresentationData(
             date=date_obj,
