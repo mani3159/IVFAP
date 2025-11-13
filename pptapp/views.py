@@ -102,14 +102,14 @@ def create_presentation(request):
             date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
         except ValueError:
             return HttpResponseBadRequest("Invalid date format.")
-
+        temp=aptdas
         ap_parts = ap.split(' ', 2)
         ap1 = ap_parts[0]+" "+ap_parts[1]
         ap2 = ap_parts[2] if len(ap_parts) > 2 else ''
         if ap2=='STATE MEMBER':
             aptdas=aptdas+" "+"-"+' '+"YUVAJANA VIBHAG AP STATE UNIT"
         else:
-            aptdas=aptdas+" "+"-"+' '+"YUVAJANA VIBHAG AP DISTRICT UNIT"
+            aptdas=aptdas+" "+"-"+' '+ap_district+" "+'district'
 
         data = PresentationData(
             date=date_obj,
@@ -118,7 +118,7 @@ def create_presentation(request):
             aadharno=aadharno,
             ap1=ap1,
             ap2=ap2,
-            aptdas=aptdas,
+            aptdas=temp,
             address=address,
             ap_district=ap_district,
             ap_constitution=ap_constitution,
@@ -138,7 +138,7 @@ def create_presentation(request):
             "aadharno": data.aadharno,
             "ap1": data.ap1,
             "ap2": data.ap2,
-            "aptdas": data.aptdas,
+            "aptdas": aptdas,
             "address": data.address,
             "ap_district": data.ap_district,
             "ap_constitution": data.ap_constitution,

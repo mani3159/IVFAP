@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <title>{% block title %}IVF Dashboard{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
   <style>
     /* Global Reset / Box Sizing */
     *, *::before, *::after {
@@ -163,7 +163,20 @@
         width: 120px;
         height: 120px;
       }
+      
+
     }
+    .team-photo {
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    cursor: pointer;
+}
+
+.team-photo:hover {
+    transform: scale(1.10);
+    box-shadow: 0 8px 30px rgba(251, 178, 22, 0.21);
+    z-index: 1;
+}
 
   </style>
 
@@ -172,35 +185,86 @@
 <body>
 
 <header>
-  <div>
-    <h1>INTERNATIONAL VAISH FEDERATION</h1>
-    <h2>ఇంటర్నేషనల్ వైశ్య ఫెడరేషన్</h2>
+  <div style="display: flex; align-items: flex-start; justify-content: flex-start;">
+    <img src="{% static 'logo.png' %}" alt="Logo"
+         style="height: 110px; width: 110px; margin-right: 32px; margin-top: -30px;">
+    <div style="flex:1;">
+      <h1 style="margin:0; font-size:2.5rem;">INTERNATIONAL VAISH FEDERATION</h1>
+      <h2 style="margin:0; font-size:1.3rem;">ఇంటర్నేషనల్ వైశ్య ఫెడరేషన్</h2>
+    </div>
+  </div>
+  <!-- Main centered photo above -->
+<div style="display: flex; justify-content: center; align-items: center; margin: 15px 0 12px 0;">
+  <div style="text-align: center;">
+    <img src="{% static 'vasavi.png' %}" alt="Photo" style="width: 260px; height: 260px; object-fit: contain; display:block; margin:0 auto;" />
+    
+  </div>
+</div>
+
+<!-- New team grid section below main photo -->
+<div style="max-width:1100px; margin:32px auto 0 auto;">
+
+  <!-- Row 1 -->
+  <div style="display:flex; justify-content:center; gap:36px; margin-bottom:20px;">
+    <div style="text-align: center;">
+      <img src="{% static '11.jpg' %}" alt="..." style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+    </div>
+    <div style="text-align: center;">
+      <img src="{% static '12.jpg' %}" alt="..." style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      
+    </div>
+    <div style="text-align: center;">
+      <img src="{% static '13.jpg' %}" alt="..." style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      
+    </div>
+    <div style="text-align: center;">
+      <img src="{% static 'image3.jpg' %}" alt="..." style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      
+    </div>
+    <div style="text-align: center;">
+      <img src="{% static '15.jpg' %}" alt="..." style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      
+    </div>
+    <div style="text-align: center;">
+      <img src="{% static '16.jpg' %}" alt="..." style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      
+    </div>
+    <!-- repeat for each in first row (total 6) -->
   </div>
 
-  <!-- Photos below titles, centered -->
-  <div class="photo-row">
-    <div class="photo-column">
-      <img src="{% static 'image1.jpg' %}" alt="Photo 1" />
-      <div class="caption">శ్రీ గాజులపల్లి అభినయ్ గారు <br>అధ్యక్షులు</div>
+  <!-- Row 2 -->
+  <div style="display:flex; justify-content:center; gap:36px; margin-bottom:20px;" >
+    <div style="text-align: center;">
+      <img src="{% static '21.jpg' %}" alt="శ్రీ డూండి రాకేష్ గారు" style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      <div class="caption">శ్రీ డూండి రాకేష్ గారు <br>IVF - ఆం.ప్ర. రాష్ట్ర గౌ. చైర్మెన్</div>
     </div>
-    <div class="photo-column">
-      <img src="{% static 'image2.jpg' %}" alt="Photo 2" />
-      <div class="caption">శ్రీ పెడబల్లె వికాస్ గారు <br>ప్రధాన కార్యదర్శి</div>
-    </div>
-    <div class="photo-column">
-      <img src="{% static 'image3.jpg' %}" alt="Photo 3" />
-      <div class="caption">శ్రీ అశోక్ అగర్వాల్ గారు</div>
-    </div>
-    <div class="photo-column">
-      <img src="{% static 'image4.jpg' %}" alt="Photo 4" />
-      <div class="caption">శ్రీ గొంట్లా రామ మోహన రావు గారు <br> IVF - ఆం.ప్ర. రాష్ట్ర ప్రధాన కార్యదర్శి</div>
-    </div>
-    <div class="photo-column">
-      <img src="{% static 'image5.jpg' %}" alt="Photo 5" />
+    <div style="text-align: center;">
+      <img src="{% static 'image5.jpg' %}" alt="శ్రీ డా. కోన శ్రీనివాస రావు గారు" style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
       <div class="caption">శ్రీ డా. కోన శ్రీనివాస రావు గారు<br>IVF - ఆం.ప్ర. రాష్ట్ర అధ్యక్షులు</div>
     </div>
+    <div style="text-align: center;">
+      <img src="{% static 'image4.jpg' %}" alt="శ్రీ గొంట్లా రామ మోహన రావు గారు" style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      <div class="caption">శ్రీ గొంట్లా రామ మోహన రావు గారు<br>IVF - ఆం.ప్ర. రాష్ట్ర ప్రధాన కార్యదర్శి</div>
+    </div>
+    <!-- repeat for each in second row (total 3) -->
   </div>
+
+  <!-- Row 3 -->
+  <div style="display:flex; justify-content:center; gap:36px;">
+    <div style="text-align: center;">
+      <img src="{% static '1.jpg' %}" alt="శ్రీ గాజులపల్లి అభినయ్ గారు" style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      <div class="caption">శ్రీ గాజులపల్లి అభినయ్ గారు<br>అధ్యక్షులు</div>
+    </div><div style="text-align: center;">
+      <img src="{% static '2.jpg' %}" alt="శ్రీ పెడబల్లె వికాస్ గారు" style="width:120px; height:120px; border-radius:50%; object-fit:cover;" class="team-photo">
+      <div class="caption">శ్రీ పెడబల్లె వికాస్ గారు<br>ప్రధాన కార్యదర్శి</div>
+    </div>
+    <!-- repeat for each in third row (total 2) -->
+  </div>
+</div>
+
 </header>
+
+
 
 <div style="position:absolute; top:15px; right:20px; font-family: Verdana, Geneva, Tahoma, sans-serif;">
   {% if user.is_authenticated %}
