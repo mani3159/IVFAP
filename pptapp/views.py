@@ -106,11 +106,7 @@ def create_presentation(request):
         ap_parts = ap.split(' ', 2)
         ap1 = ap_parts[0]+" "+ap_parts[1]
         ap2 = ap_parts[2] if len(ap_parts) > 2 else ''
-        if ap2=='STATE MEMBER':
-            aptdas=aptdas+" "+"-"+' '+"YUVAJANA VIBHAG AP STATE UNIT"
-        else:
-            aptdas=aptdas+" "+"-"+' '+committee
-
+        aptdas=aptdas+" "+"-"+' '+committee
         data = PresentationData(
             date=date_obj,
             toname=toname,
