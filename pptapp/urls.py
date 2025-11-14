@@ -10,4 +10,5 @@ urlpatterns = [
     path('history/download_ppt/<int:pk>/', views.history_download_ppt, name='history_download_ppt'),  # <-- Add this line
     path('accounts/logout/', views.user_logout, name='logout'),
     path('history/edit/<int:pk>/', views.history_edit, name='history_edit'),
+    path('history/delete/<int:pk>/', views.history_delete, name='history_delete'),
 ]

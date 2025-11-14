@@ -9,7 +9,13 @@ from django.http import HttpResponse, FileResponse
 import pandas as pd
 import io
 
-
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse, FileResponse
+from .forms import PresentationForm
+from .models import PresentationData
+from django.contrib.auth.decorators import user_passes_test
+from pptx import Presentation
+import os
 from django.http import FileResponse
 from django.shortcuts import render
 from .forms import PresentationForm
@@ -233,15 +239,24 @@ from .models import PresentationData
 import os
 from pptx import Presentation
 
-
+from django.shortcuts import get_object_or_404
+from django.http import FileResponse
+from pptx import Presentation
+from io import BytesIO
 @superuser_required
-def history_download_ppt(request, pk):
-    pk = str(pk).upper()
-    entry = get_object_or_404(PresentationData, pk=pk)
-    safe_entry_id = ''.join(c if c.isalnum() else '_' for c in str(entry.entry_id))
-    template_path = "Presentation1.pptx"
-    out_pptx_path = f"tmp_{safe_entry_id}.pptx"
 
+
+def history_download_ppt(request, pk):
+    entry = get_object_or_404(PresentationData, pk=pk)
+
+    # Prepare file (no special filename sanitization needed for in-memory download)
+    template_path = "Presentation1.pptx"
+
+    # Build aptdas logic exactly as in your create view (to include committee)
+    aptdas_with_committee = entry.aptdas + " - " + entry.committee if entry.committee else entry.aptdas
+    temp=entry.ap1.split()
+    entry.ap1=temp[0]+" "+temp[1]
+    entry.ap2=temp[2]+" "+temp[3]
     replace_map = {
         "date": entry.date.strftime('%d-%m-%Y'),
         "toname": entry.toname,
@@ -249,9 +264,12 @@ def history_download_ppt(request, pk):
         "aadharno": entry.aadharno,
         "ap1": entry.ap1,
         "ap2": entry.ap2,
-        "aptdas": entry.aptdas,
-        "address": entry.address,  # Add address field here, ensure it exists in model
+        "aptdas": aptdas_with_committee,
+        "address": entry.address,
+        "ap_district": entry.ap_district,
+        "ap_constitution": entry.ap_constitution,
     }
+    entry.save()
 
     prs = Presentation(template_path)
     for slide in prs.slides:
@@ -263,18 +281,20 @@ def history_download_ppt(request, pk):
                             if key in run.text:
                                 run.text = run.text.replace(key, str(val))
 
-    prs.save(out_pptx_path)
+    # Save pptx to BytesIO (not disk)
+    pptx_io = BytesIO()
+    prs.save(pptx_io)
+    pptx_io.seek(0)
 
-    response = FileResponse(open(out_pptx_path, "rb"), content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation")
-    response['Content-Disposition'] = f'attachment; filename="{safe_entry_id}.pptx"'
+    # Suggested filename; uses name and Entry id
+    filename = f"{entry.toname}_Appointment_Letter.pptx"
+    response = FileResponse(
+        pptx_io,
+        content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    )
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
     return response
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse, FileResponse
-from .forms import PresentationForm
-from .models import PresentationData
-from django.contrib.auth.decorators import user_passes_test
-from pptx import Presentation
-import os
+
 
 
 
@@ -320,3 +340,13 @@ def history_edit(request, pk):
             'today': entry.date,  # Assuming you want to default date input to existing date
         }
         return render(request, 'history_edit.html', context)
+    
+from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.http import require_POST
+from .models import PresentationData
+
+@require_POST
+def history_delete(request, pk):
+    entry = get_object_or_404(PresentationData, pk=pk)
+    entry.delete()
+    return redirect('track_history')  # Make sure you have a URL with name='history'
