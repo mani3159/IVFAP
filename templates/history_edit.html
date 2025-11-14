@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Create Entry{% endblock %}
+{% block title %}Edit Entry{% endblock %}
 
 {% block content %}
 <h2 style="text-align:center; color:#8e2916; font-weight:800; letter-spacing:1px; font-size:1.55rem; margin-bottom:16px;">
@@ -9,89 +9,109 @@
     ఇంటర్నేషనల్ వైశ్య ఫెడరేషన్
 </h3>
 
-<form id="presentationForm" method="POST" style="margin-top:28px; max-width: 500px;">
+<form id="presentationForm" method="POST" style="margin-top:28px; max-width: 500px;" onsubmit="return validateForm()">
     {% csrf_token %}
-    
     <div style="margin-bottom: 15px;">
-        <label>Date: <input type="date" name="date" required value="{{ today }}"></label><br>
-
+        <label>Date: 
+            <input type="date" name="date" required value="{% if entry %}{{ entry.date|date:'Y-m-d' }}{% else %}{{ today }}{% endif %}">
+        </label>
     </div>
 
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Name:</label>
-        <input type="text" name="toname" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+        <input type="text" name="toname" required 
+            style="width: 100%; padding: 8px; box-sizing: border-box;" 
+            value="{% if entry %}{{ entry.toname }}{% endif %}">
     </div>
 
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Phno:</label>
-        <input type="text" name="phno" maxlength="10" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+        <input type="text" name="phno" maxlength="10" required 
+            style="width: 100%; padding: 8px; box-sizing: border-box;" 
+            value="{% if entry %}{{ entry.phno }}{% endif %}">
     </div>
 
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Aadharno:</label>
-        <input type="text" name="aadharno" maxlength="12" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+        <input type="text" name="aadharno" maxlength="12" required 
+            style="width: 100%; padding: 8px; box-sizing: border-box;" 
+            value="{% if entry %}{{ entry.aadharno }}{% endif %}">
     </div>
 
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Appointment:</label>
         <select name="ap" required style="width: 100%; padding: 8px; box-sizing: border-box;">
-            <option value="YUVAJANA VIBHAG DISTRICT MEMBER">YUVAJANAVIBHAG DISTRICT MEMBER</option>
-            <option value="YUVAJANA VIBHAG STATE MEMBER">YUVAJANAVIBHAG STATE MEMBER</option>
+            <option value="YUVAJANA VIBHAG DISTRICT MEMBER" {% if entry and entry.ap1 == "YUVAJANA VIBHAG DISTRICT MEMBER" %}selected{% endif %}>
+                YUVAJANAVIBHAG DISTRICT MEMBER
+            </option>
+            <option value="YUVAJANA VIBHAG STATE MEMBER" {% if entry and entry.ap1 == "YUVAJANA VIBHAG STATE MEMBER" %}selected{% endif %}>
+                YUVAJANAVIBHAG STATE MEMBER
+            </option>
         </select>
     </div>
     <div style="margin-bottom: 15px;">
     <label style="display:block; font-weight:600; margin-bottom: 5px;">Committee:</label>
-    <input type="text" name="committee" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+    <input type="text" name="committee" required style="width: 100%; padding: 8px; box-sizing: border-box;" value="{% if entry %}{{ entry.committee }}{% endif %}">
 </div>
+
     <div style="margin-bottom: 15px;">
-    <label style="display:block; font-weight:600; margin-bottom: 5px;">Designation:</label>
-    <select name="aptdas" id="aptdas" required style="width: 100%; padding: 8px; box-sizing: border-box;">
-        <option value="">Select Designation</option>
-        <option value="President">President</option>
-        <option value="Vice President">Vice President</option>
-        <option value="General Secretary">General Secretary</option>
-        <option value="Addl. Secretary">Addl. Secretary</option>
-        <option value="Secretary">Secretary</option>
-        <option value="Treasurer">Treasurer</option>
-        <option value="Joint Secretary">Joint Secretary</option>
-        <option value="EC Member">EC Member</option>
-        <option value="State Committee Chairman">State Committee Chairman</option>
-        <option value="State Committee Director">State Committee Director</option>
-    </select>
-</div>
+        <label style="display:block; font-weight:600; margin-bottom: 5px;">Designation:</label>
+        <select name="aptdas" id="aptdas" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+            <option value="">Select Designation</option>
+            <option value="President" {% if entry and entry.aptdas == "President" %}selected{% endif %}>President</option>
+            <option value="Vice President" {% if entry and entry.aptdas == "Vice President" %}selected{% endif %}>Vice President</option>
+            <option value="General Secretary" {% if entry and entry.aptdas == "General Secretary" %}selected{% endif %}>General Secretary</option>
+            <option value="Addl. Secretary" {% if entry and entry.aptdas == "Addl. Secretary" %}selected{% endif %}>Addl. Secretary</option>
+            <option value="Secretary" {% if entry and entry.aptdas == "Secretary" %}selected{% endif %}>Secretary</option>
+            <option value="Treasurer" {% if entry and entry.aptdas == "Treasurer" %}selected{% endif %}>Treasurer</option>
+            <option value="Joint Secretary" {% if entry and entry.aptdas == "Joint Secretary" %}selected{% endif %}>Joint Secretary</option>
+            <option value="EC Member" {% if entry and entry.aptdas == "EC Member" %}selected{% endif %}>EC Member</option>
+            <option value="State Committee Chairman" {% if entry and entry.aptdas == "State Committee Chairman" %}selected{% endif %}>State Committee Chairman</option>
+            <option value="State Committee Director" {% if entry and entry.aptdas == "State Committee Director" %}selected{% endif %}>State Committee Director</option>
+        </select>
+    </div>
 
-
-    
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">AP District:</label>
         <select name="ap_district" id="ap_district" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+            {% if entry %}
+            <option value="{{ entry.ap_district }}" selected>{{ entry.ap_district }}</option>
+            {% else %}
             <option value="">Select District</option>
+            {% endif %}
+            <!-- Your JS will populate other districts -->
         </select>
     </div>
 
     <div style="margin-bottom: 15px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">AP Constitution:</label>
         <select name="ap_constitution" id="ap_constitution" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+            {% if entry %}
+            <option value="{{ entry.ap_constitution }}" selected>{{ entry.ap_constitution }}</option>
+            {% else %}
             <option value="">Select Constitution</option>
+            {% endif %}
+            <!-- JS updates after district changes -->
         </select>
     </div>
 
     <div style="margin-bottom: 20px;">
         <label style="display:block; font-weight:600; margin-bottom: 5px;">Address:</label>
-        <textarea name="address" rows="4" cols="40" placeholder="Enter address here" required style="width: 100%; padding: 8px; box-sizing: border-box;"></textarea>
+        <textarea name="address" rows="4" cols="40" required style="width: 100%; padding: 8px; box-sizing: border-box;">{% if entry %}{{ entry.address }}{% endif %}</textarea>
     </div>
-    <div style="margin-bottom: 15px;">
-    <label style="display:block; font-weight:600; margin-bottom: 5px;">Pincode:</label>
-    <input type="text" name="pincode" maxlength="10" required style="width: 100%; padding: 8px; box-sizing: border-box;">
-</div>
 
-    
+    <div style="margin-bottom: 15px;">
+        <label style="display:block; font-weight:600; margin-bottom: 5px;">Pincode:</label>
+        <input type="text" name="pincode" maxlength="10" required
+            style="width: 100%; padding: 8px; box-sizing: border-box;"
+            value="{% if entry %}{{ entry.pincode }}{% endif %}">
+    </div>
+
     <button type="submit"
-            style="background:#fbb216; color:#431c08; font-weight:700; border:none; border-radius:6px; padding:9px 38px; font-size:1rem; box-shadow:0 2px 5px #f0eaa6; cursor:pointer;">
-        Submit
+        style="background:#fbb216; color:#431c08; font-weight:700; border:none; border-radius:6px; padding:9px 38px; font-size:1rem; box-shadow:0 2px 5px #f0eaa6; cursor:pointer;">
+        Update
     </button>
 </form>
-
 
 <script>
 // Dictionary of districts and their constituencies

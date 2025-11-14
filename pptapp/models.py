@@ -15,7 +15,7 @@ class PresentationData(models.Model):
     ap_district = models.CharField(max_length=100,blank=True)       # Just a string
     ap_constitution = models.CharField(max_length=100,blank=True)   # Just a string
     pincode = models.CharField(max_length=10, blank=True, null=True)
-
+    committee=models.CharField(max_length=30,blank=True)
     def save(self, *args, **kwargs):
         if not self.entry_id:
             super().save(*args, **kwargs)

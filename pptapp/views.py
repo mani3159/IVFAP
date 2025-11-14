@@ -94,8 +94,8 @@ def create_presentation(request):
         ap_constitution = request.POST.get('ap_constitution', '')
         address = request.POST.get('address', '')
         pincode=request.POST.get('pincode','')
-
-        if not all([date_str, toname, phno, aadharno, ap, aptdas, ap_district, ap_constitution, address]):
+        committee=request.POST.get('committee','')
+        if not all([date_str, toname, phno, aadharno, ap, aptdas, ap_district, ap_constitution, address,pincode,committee]):
             return HttpResponseBadRequest("All fields are required.")
 
         try:
@@ -109,7 +109,7 @@ def create_presentation(request):
         if ap2=='STATE MEMBER':
             aptdas=aptdas+" "+"-"+' '+"YUVAJANA VIBHAG AP STATE UNIT"
         else:
-            aptdas=aptdas+" "+"-"+' '+ap_district+" "+'district'
+            aptdas=aptdas+" "+"-"+' '+committee
 
         data = PresentationData(
             date=date_obj,
@@ -123,6 +123,7 @@ def create_presentation(request):
             ap_district=ap_district,
             ap_constitution=ap_constitution,
             pincode=pincode,
+            committee=committee
         )
         data.save()
 
@@ -285,3 +286,41 @@ def get_constituencies(request):
     district = request.GET.get('district', '')
     constituencies = CONSTITUENCIES_BY_DISTRICT.get(district, [])
     return JsonResponse({'constituencies': constituencies})
+def history_edit(request, pk):
+    entry = get_object_or_404(PresentationData, pk=pk)
+
+    if request.method == 'POST':
+        # Collect updated form data from POST request
+        date = request.POST.get('date')
+        toname = request.POST.get('toname')
+        phno = request.POST.get('phno')
+        aadharno = request.POST.get('aadharno')
+        ap = request.POST.get('ap')
+        aptdas = request.POST.get('aptdas')
+        ap_district = request.POST.get('ap_district')
+        ap_constitution = request.POST.get('ap_constitution')
+        address = request.POST.get('address')
+        pincode = request.POST.get('pincode')
+        committee=request.POST.get('committee')
+        # Update entry object fields
+        entry.date = date
+        entry.toname = toname
+        entry.phno = phno
+        entry.aadharno = aadharno
+        entry.ap1 = ap   # Assuming field ap1 matches this
+        entry.aptdas = aptdas
+        entry.ap_district = ap_district
+        entry.ap_constitution = ap_constitution
+        entry.address = address
+        entry.pincode = pincode
+        entry.committee=committee
+        entry.save()
+        return redirect('track_history')  # Adjust redirect name as needed
+
+    else:
+        # GET request, pre-populate form fields with existing entry data
+        context = {
+            'entry': entry,
+            'today': entry.date,  # Assuming you want to default date input to existing date
+        }
+        return render(request, 'history_edit.html', context)

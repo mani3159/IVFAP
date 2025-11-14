@@ -23,51 +23,59 @@
     border-radius:15px;
     overflow:hidden;
     font-size:0.98rem;">
-    <thead>
-        <tr style="background:#fbb216; color:#3f2913;">
-            
-            <th style="padding:12px 13px;">Date</th>
-            <th style="padding:12px 13px;">To Name</th>
-            <th style="padding:12px 13px;">Phone No</th>
-            <th style="padding:12px 13px;">Aadhar No</th>
-            <th style="padding:12px 13px;">AP1</th>
-            <th style="padding:12px 13px;">AP2</th>
-            <th style="padding:12px 13px;">Designation</th>
-            <th style="padding:12px 13px;">District</th>
-            <th style="padding:12px 13px;">Constitution</th>
-            <th style="padding:12px 13px;">Pin Code</th>
-            <th style="padding:12px 13px;">Created At</th>
-            <th style="padding:12px 13px;">Download</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        {% for entry in entries %}
-        <tr style="border-bottom:1.5px solid #faf0c6; text-align:center; height:39px;">
-            
-            <td style="padding:9px 8px;">{{ entry.date }}</td>
-            <td style="padding:9px 8px;">{{ entry.toname }}</td>
-            <td style="padding:9px 8px; font-family:'Segoe UI',sans-serif;">{{ entry.phno }}</td>
-            <td style="padding:9px 8px; font-family:'Segoe UI',sans-serif;">{{ entry.aadharno }}</td>
-            <td style="padding:9px 8px;">{{ entry.ap1 }}</td>
-            <td style="padding:9px 8px;">{{ entry.ap2 }}</td>
-            <td style="padding:9px 8px;">{{ entry.aptdas }}</td>
-            <td style="padding:9px 8px;">{{ entry.ap_district }}</td>
-            <td style="padding:9px 8px;">{{ entry.ap_constitution }}</td>
-            <td style="padding:9px 8px;">{{ entry.pincode }}</td>
-            <td style="padding:9px 8px; font-size:0.96em;">{{ entry.created_at }}</td>
-            <td style="padding:9px 8px;">
-                <a href="{% url 'history_download_ppt' pk=entry.pk %}">
-                    <button style="background:#fb9e16; color:#4c2009; font-weight:600; border:none; border-radius:5px; padding:8px 16px;">
-                        Download&nbsp;PPT
-                    </button>
-                </a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="10" style="padding:20px 0; text-align:center;">No entries found.</td></tr>
-        {% endfor %}
-    </tbody>
+   <thead>
+    <tr style="background:#fbb216; color:#3f2913;">
+        <th style="padding:12px 13px;">Date</th>
+        <th style="padding:12px 13px;">To Name</th>
+        <th style="padding:12px 13px;">Phone No</th>
+        <th style="padding:12px 13px;">Aadhar No</th>
+        <th style="padding:12px 13px;">AP1</th>
+        <th style="padding:12px 13px;">AP2</th>
+        <th style="padding:12px 13px;">Designation</th>
+        <th style="padding:12px 13px;">Committee</th>
+        <th style="padding:12px 13px;">District</th>
+        <th style="padding:12px 13px;">Constitution</th>
+        <th style="padding:12px 13px;">Pin Code</th>
+        <th style="padding:12px 13px;">Created At</th>
+        <th style="padding:12px 13px;">Download</th>
+        <th style="padding:12px 13px;">Edit</th> <!-- New Edit header -->
+    </tr>
+</thead>
+<tbody>
+    {% for entry in entries %}
+    <tr style="border-bottom:1.5px solid #faf0c6; text-align:center; height:39px;">
+        <td style="padding:9px 8px;">{{ entry.date }}</td>
+        <td style="padding:9px 8px;">{{ entry.toname }}</td>
+        <td style="padding:9px 8px; font-family:'Segoe UI',sans-serif;">{{ entry.phno }}</td>
+        <td style="padding:9px 8px; font-family:'Segoe UI',sans-serif;">{{ entry.aadharno }}</td>
+        <td style="padding:9px 8px;">{{ entry.ap1 }}</td>
+        <td style="padding:9px 8px;">{{ entry.ap2 }}</td>
+        <td style="padding:9px 8px;">{{ entry.aptdas }}</td>
+        <td style="padding:9px 8px;">{{ entry.committee }}</td>
+        <td style="padding:9px 8px;">{{ entry.ap_district }}</td>
+        <td style="padding:9px 8px;">{{ entry.ap_constitution }}</td>
+        <td style="padding:9px 8px;">{{ entry.pincode }}</td>
+        <td style="padding:9px 8px; font-size:0.96em;">{{ entry.created_at }}</td>
+        <td style="padding:9px 8px;">
+            <a href="{% url 'history_download_ppt' pk=entry.pk %}">
+                <button style="background:#fb9e16; color:#4c2009; font-weight:600; border:none; border-radius:5px; padding:8px 16px;">
+                    Download&nbsp;PPT
+                </button>
+            </a>
+        </td>
+        <td style="padding:9px 8px;">
+            <a href="{% url 'history_edit' pk=entry.pk %}">
+                <button style="background:#3f51b5; color:#fff; font-weight:600; border:none; border-radius:5px; padding:8px 16px;">
+                    Edit
+                </button>
+            </a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="13" style="padding:20px 0; text-align:center;">No entries found.</td></tr>
+    {% endfor %}
+</tbody>
+
 </table>
 </div>
 {% endblock %}
